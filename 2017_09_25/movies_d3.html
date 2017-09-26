@@ -103,32 +103,30 @@
         }
 
         function render4(data, comparator) {
-          alert(data)
+          console.log(data)
           d3.select("#chart4").selectAll("div#div5")
                   .data(data)
                   .enter()
-                  .append("p")
-                  .text("ok");
-
-          /*
-          d3.select("#chart4").selectAll("div#div5.h-bar")
-                  .data(data)
-              .enter().append("div")
-              .attr("id", "div5")
-              .attr("class", "h-bar")
-              .append("span");
+            	  .append("div")
+                  .attr("id", "div5")
+                  .attr("class", "h-bar")
+                  .attr("style", "background-color: brown")
+                  .append("span");
 
           d3.select("#chart4").selectAll("div#div5.h-bar")
                   .data(data)
-              .attr("class", "h-bar")
-              .style("width", function (d) {
-                  return (d * 0.2) + "px";
-              })
+                  .attr("class", "h-bar")
+                  .style("width", function (d) {
+  	                  return (d.gross * 0.1) + "px";
+              	   })
               .select("span")
                   .text(function (d) {
-                      return d;
+                      return d.name;
                   });
-                  */
+            if(comparator)
+            d3.select("body")
+              .selectAll("div#div5.h-bar")
+              .sort(comparator);
         }
 
         var compare1 = function (a, b) {
@@ -144,7 +142,7 @@
         };
 
         var compare4 = function (a, b) {
-          return a.Genre > b.Genre?-1:1;
+          return a.gross > b.gross?-1:1;
         };
 
         d3.json("movies.json", function(error, json){
@@ -153,9 +151,7 @@
             render3(json, compare3);
 
             var data = {}
-            var data2 = {
-              genre : []
-            }
+            var genres = []
 
             for (var i = 0; i < json.length; i++) {
               var obj = json[i]
@@ -173,9 +169,9 @@
                 "gross" : data[i]
               };
 
-              data2.genre.push(obj);
+              genres.push(obj);
             }
-            render4(JSON.stringify(data2), compare4);
+            render4(genres, compare4);
         });
     </script>
 </body>
