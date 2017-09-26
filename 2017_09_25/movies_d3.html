@@ -87,10 +87,10 @@
                   .data(data)
               .attr("class", "h-bar")
               .style("width", function (d) {
-                  return ((d.Worldwide_Gross_M / d.Budget_M) * 70) + "px";
+                  return ((d.Worldwide_Gross_M - d.Budget_M) * 0.5) + "px";
               })
               .style("background-color", function(d){
-                  return colorScale((d.Worldwide_Gross_M / d.Budget_M) * 10);
+                  return colorScale((d.Worldwide_Gross_M - d.Budget_M) * 0.1);
               })
               .select("span")
                   .text(function (d) {
@@ -138,7 +138,7 @@
         };
 
         var compare3 = function (a, b) {
-          return (a.Worldwide_Gross_M / a.Budget_M) > (b.Worldwide_Gross_M / b.Budget_M)?-1:1;
+          return (a.Worldwide_Gross_M - a.Budget_M) > (b.Worldwide_Gross_M - b.Budget_M)?-1:1;
         };
 
         var compare4 = function (a, b) {
